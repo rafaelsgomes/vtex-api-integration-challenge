@@ -25,23 +25,23 @@ router.get('/', async (request, response) => {
 
   await axios
     .get(
-      `https://${ACCOUNTNAME}.${ENVIRONMENTLINK}.com.br/api/oms/pvt/orders/${ORDERID}`,
+      `https://${ACCOUNTNAME}.${ENVIRONMENTLINK}.com/api/oms/pvt/orders/${ORDERID}`,
       options,
     )
     .then(async response => {
       const { data } = response;
       const csvData = [];
       csvData[0] = {
-        orderId: data[0].orderId,
-        clientId: data[0].clientProfileData.userProfileId,
-        creationDate: data[0].creationDate,
+        orderId: data.orderId,
+        clientId: data.clientProfileData.id,
+        creationDate: data.creationDate,
         paymentNames:
-          data[0].paymentData.transactions[0].payments[0].paymentSystemName,
-        document: data[0].clientProfileData.document,
-        lastChange: data[0].lastChange,
-        totalItems: data[0].totals[0].value,
-        Discounts: data[0].totals[1].value,
-        value: data[0].value,
+          data.paymentData.transactions[0].payments[0].paymentSystemName,
+        document: data.clientProfileData.document,
+        lastChange: data.lastChange,
+        totalItems: data.totals[0].value,
+        Discounts: data.totals[1].value,
+        value: data.value,
       };
       const cvsWriter = createObjectCsvWriter({
         path: `./tmp/ORDERS_${dayjs().year()}-${

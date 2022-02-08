@@ -1,5 +1,5 @@
 import { app } from './app';
 
-app.listen(3333, () => {
+app.listen(8080, () => {
   console.log('Sever is running!');
 });
